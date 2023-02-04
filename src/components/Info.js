@@ -1,15 +1,72 @@
-import React from 'react';
-import { GithubContext } from '../context/context';
-import styled from 'styled-components';
-import { GoRepo, GoGist } from 'react-icons/go';
-import { FiUsers, FiUserPlus } from 'react-icons/fi';
+import React from 'react'
+import {GithubContext} from '../context/context'
+import styled from 'styled-components'
+import {Book, Code, PeopleAlt, PersonAdd} from "@mui/icons-material";
 
 const UserInfo = () => {
 
-  const data = React.useContext(GithubContext)
+    const {githubUser} = React.useContext(GithubContext)
+    const {public_repos, followers, following, public_gists} = githubUser
 
-  return <h2>user info component: {data}</h2>;
+    const items = [
+        {
+            id: 1,
+            icon: <Book className='icon'/>,
+            abel: 'repos',
+            value: public_repos,
+            color: 'pink',
+        },
+        {
+            id: 2,
+            icon: <PeopleAlt className='icon'/>,
+            abel: 'followers',
+            value: followers,
+            color: 'green'
+        },
+        {
+            id: 3,
+            icon: <PersonAdd className='icon'/>,
+            abel: 'following',
+            value: following,
+            color: 'purple'
+        },
+        {
+            id: 4,
+            icon: <Code className='icon'/>,
+            abel: 'gists',
+            value: public_gists,
+            color: 'yellow'
+        },
+    ]
+
+
+    console.log(public_repos)
+
+    return (
+        <section className='section'>
+            <Wrapper className='section-center'>
+                {
+                    items.map(item => {
+                        return <Item key={item.id} {...item}></Item>
+                    })
+                }
+            </Wrapper>
+        </section>
+
+    );
 };
+
+const Item = ({icon, label, value, color}) => {
+    return (
+        <article className='item'>
+            <span className={color}>{icon}</span>
+            <div>
+                <h3>{value}</h3>
+                <p>{label}</p>
+            </div>
+        </article>)
+}
+
 
 const Wrapper = styled.section`
   display: grid;
@@ -18,6 +75,7 @@ const Wrapper = styled.section`
   @media (min-width: 640px) {
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   }
+
   .item {
     border-radius: var(--radius);
     padding: 1rem 2rem;
@@ -26,6 +84,7 @@ const Wrapper = styled.section`
     grid-template-columns: auto 1fr;
     column-gap: 3rem;
     align-items: center;
+
     span {
       width: 3rem;
       height: 3rem;
@@ -33,29 +92,36 @@ const Wrapper = styled.section`
       place-items: center;
       border-radius: 50%;
     }
+
     .icon {
       font-size: 1.5rem;
     }
+
     h3 {
       margin-bottom: 0;
       letter-spacing: 0;
     }
+
     p {
       margin-bottom: 0;
       text-transform: capitalize;
     }
+
     .pink {
       background: #ffe0f0;
       color: #da4a91;
     }
+
     .green {
       background: var(--clr-primary-10);
       color: var(--clr-primary-5);
     }
+
     .purple {
       background: #e6e6ff;
       color: #5d55fa;
     }
+
     .yellow {
       background: #fffbea;
       color: #f0b429;
