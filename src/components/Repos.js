@@ -8,18 +8,28 @@ const Repos = () => {
     const {repos} = React.useContext(GithubContext)
 
     let languages = repos.reduce((total, item) => {
-        const {language} = item
+        const {language, stargazers_count} = item
         if(!language) return total
 
         if(total[language]){
-            total[language] = {...total[language], value:  total[language].value + 1}
+            total[language] = {
+                ...total[language],
+                value:  total[language].value + 1,
+                stars: total[language].stars + stargazers_count
+            }
         }else {
-            total[language] = {label: language, value: 1}
+            total[language] = {label: language, value: 1, stars: stargazers_count}
         }
         return total
     }, {})
 
-    languages = Object.values(languages).sort((a, b) => b.value - a.value).slice(0, 5)
+    console.log(languages)
+
+    const mostUsedLanguages = Object.values(languages).sort((a, b) => b.value - a.value).slice(0, 5)
+
+    //most stars per language
+
+    const mostPopularLanguages = Object.values(languages).sort((a, b)=> b.stars - a.stars).map(item => ({...item, value: item.stars}))
 
     console.log(languages)
 
@@ -27,7 +37,10 @@ const Repos = () => {
     return (
         <section className='section'>
             <Wrapper className='section-center'>
-                <Pie3D data={languages}/>
+                <Pie3D data={mostUsedLanguages}/>
+                <div></div>
+                <Doughnut2D data={mostPopularLanguages}/>
+                <div></div>
             </Wrapper>
         </section>
     );
