@@ -9,7 +9,7 @@ const SearchUser = () => {
     const [user, setUser] = React.useState('')
     // get things from global context
 
-    const {requests} = React.useContext(GithubContext)
+    const {requests, error} = React.useContext(GithubContext)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -24,6 +24,10 @@ const SearchUser = () => {
     return (
         <section className='section'>
             <Wrapper className='section-center'>
+                {error.show &&
+                    <ErrorWrapper>
+                        <p>{error.msg}</p>
+                    </ErrorWrapper>}
                 <form onSubmit={handleSubmit}>
                     <div className='form-control'>
                         <Search/>
