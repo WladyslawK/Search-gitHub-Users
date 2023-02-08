@@ -34,6 +34,25 @@ const GithubProvider = ({children}) => {
 
         if(response){
             setGithubUser(response.data)
+            const {login, followers_url} = response.data
+
+            await Promise.allSettled([axios.get(`${followers_url}?per_page=100`), axios.get(`${rootUrl}/users/${login}/repos?per_page=100`)])
+                .then(result => {
+                    console.log('Result', result)
+                    const [followers, repos] = result
+
+                    if(repos.status === 'fulfilled'){
+                        setRepos(repos.value.data)
+                    }
+
+                    if(followers.status === 'fulfilled'){
+                        setFollowers(followers.value.data)
+                    }
+                })
+            //repos
+            //'https://api.github.com/users/john-smilga/repos?&per_page=100'
+            //followers
+            //'https://api.github.com/users/john-smilga/followers'
         }else{
             toggleError(true, 'there is no user with that user name')
         }
