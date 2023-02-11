@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {GithubProvider} from './context/context';
 import {Auth0Provider} from '@auth0/auth0-react';
+import {HashRouter} from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -18,9 +19,12 @@ root.render(
         redirectUri={window.location.origin}
         cacheLocation='localstorage'
     >
-        <GithubProvider>
-            <App/>
-        </GithubProvider>
+        <HashRouter>
+            <GithubProvider>
+                <App/>
+            </GithubProvider>
+        </HashRouter>
+
     </Auth0Provider>
 );
 
