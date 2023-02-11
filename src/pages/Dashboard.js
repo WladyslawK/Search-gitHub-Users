@@ -2,10 +2,12 @@ import React from 'react';
 import {Info, Repos, User, SearchUser, Navbar} from '../components';
 import loadingImage from '../images/preloader.gif';
 import {GithubContext} from '../context/context';
+import {useNavigate} from "react-router-dom";
 
 const Dashboard = () => {
 
     const {isLoading} = React.useContext(GithubContext)
+
 
     return (
         <main>

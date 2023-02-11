@@ -19,11 +19,9 @@ root.render(
         redirectUri={window.location.origin}
         cacheLocation='localstorage'
     >
-        <HashRouter>
             <GithubProvider>
                 <App/>
             </GithubProvider>
-        </HashRouter>
 
     </Auth0Provider>
 );
